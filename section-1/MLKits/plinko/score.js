@@ -38,16 +38,15 @@ function runAnalysis() {
   const testSetSize = 10
   const [testSet, trainingSet] = splitDataset(outputs, testSetSize);
 
-  let numberCorrect = 0;
-  for (let i = 0; i < testSet.length; i++) {
-    const bucket = knn(trainingSet, testSet[i][0]) // Test ith position against knn
-    
-    if (bucket == testSet[i][3]) {
-      numberCorrect ++
-    }
-  }
+  const accuracy = _.chain(testSet)
+  .filter(testPoint => 
+    knn(trainingSet, testPoint[0]) === testPoint[3]
+  )
+  .size() // Same as length for a collectin
+  .divide(testSetSize)
+  .value()
 
-  console.log('Accuracy: ', numberCorrect / testSetSize)
+  console.log('Accuracy: ', accuracy)
 }
 
 function splitDataset(data, testCount) {
