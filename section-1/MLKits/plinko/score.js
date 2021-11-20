@@ -4,15 +4,22 @@ const outputs = [];
 
 
 function distance(pointA, pointB) {
-  return Math.abs(pointA - pointB)
+  return _.chain(pointA)
+    .zip(pointB) // Create pairs of values for the same feature
+    .map(([a, b]) => (a - b) ** 2) // square
+    .sum() 
+    .value() ** 0.5 // sqrt
 }
 
-const k = 10
 
-
-function knn(data, point) {
+function knn(data, point, k) {
  return _.chain(data)
- .map(row => [distance(row[0], point), row[3]]) // map to distance from to predition point : bucket it landed in
+ .map(row => {
+   return [
+     distance(_.initial(row), point),  // don't do initial(point) because we may pass in points that don't have a 
+     _.last(row)
+    ]
+}) // map to distance from to predition point : bucket it landed in
  .sortBy(row => row[0]) // sort by distnance to prediction point
  .slice(0, k) // select top k rows
  .countBy(row => row[1]) // Count by bucket they fell in
@@ -25,9 +32,6 @@ function knn(data, point) {
 }
 
 
-
-
-
 function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
   outputs.push([
     dropPosition, bounciness, size, bucketLabel
@@ -35,18 +39,25 @@ function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
 }
 
 function runAnalysis() {
-  const testSetSize = 10
+  const testSetSize = 50
   const [testSet, trainingSet] = splitDataset(outputs, testSetSize);
 
-  const accuracy = _.chain(testSet)
-  .filter(testPoint => 
-    knn(trainingSet, testPoint[0]) === testPoint[3]
-  )
-  .size() // Same as length for a collectin
-  .divide(testSetSize)
-  .value()
+  _.range(1, 20).forEach(k => {
 
-  console.log('Accuracy: ', accuracy)
+    const accuracy = _.chain(testSet)
+    .filter(testPoint => 
+      knn(trainingSet, _.initial(testPoint), k) === testPoint[3]
+    )
+    .size() // Same as length for a collectin
+    .divide(testSetSize)
+    .value()
+
+    console.log(`Accuracy for k ${k} = `, accuracy)
+
+  })
+
+
+
 }
 
 function splitDataset(data, testCount) {
