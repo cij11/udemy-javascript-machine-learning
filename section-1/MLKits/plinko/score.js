@@ -39,23 +39,25 @@ function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
 }
 
 function runAnalysis() {
-  const testSetSize = 50
-  const [testSet, trainingSet] = splitDataset(minMax(outputs, 3), testSetSize);
+  const testSetSize = 100
+  const k = 10;
+  
+  _.range(0, 3).forEach(feature => {
+    const data = _.map(outputs, row => [row[feature], _.last(row)])
 
-  _.range(1, 20).forEach(k => {
+    const [testSet, trainingSet] = splitDataset(minMax(data, 1), testSetSize);
 
     const accuracy = _.chain(testSet)
     .filter(testPoint => 
-      knn(trainingSet, _.initial(testPoint), k) === testPoint[3]
+      knn(trainingSet, _.initial(testPoint), k) === _.last(testPoint)
     )
-    .size() // Same as length for a collectin
+    .size() // Same as length for a collection
     .divide(testSetSize)
     .value()
 
-    console.log(`Accuracy for k ${k} = `, accuracy)
+    console.log(`Accuracy for feature ${feature} = `, accuracy)
 
   })
-
 }
 
 function splitDataset(data, testCount) {
