@@ -3,7 +3,14 @@ require('@tensorflow/tfjs-node') // Instruct tensorflow to run on cpu by default
 const loadCSV = require('./load-csv')
 
 function knn(features, labels, predictionPoint, k) {
-  return features.sub(predictionPoint)
+  const { mean, variance } = tf.moments(features, 0)
+
+  const scaledPrediction = predictionPoint.sub(mean).div(variance.pow(0.5))
+
+
+  return features.sub(mean)
+  .div(variance.pow(0.5)) // Scale features
+  .sub(scaledPrediction)
   .pow(2)
   .sum(1)
   .pow(0.5)
@@ -18,7 +25,7 @@ function knn(features, labels, predictionPoint, k) {
 let { features, labels, testFeatures, testLabels } = loadCSV('kc_house_data.csv', {
   shuffle: true,
   splitTest: 10,
-  dataColumns: ['lat', 'long'],
+  dataColumns: ['lat', 'long', 'sqft_lot', 'sqft_living'],
   labelColumns: ['price']
 });
 
