@@ -86,9 +86,6 @@ class LinearRegression {
   // Scale and prepend 1's. This needs to be applied to training and test features
   processFeatures(features) {
     features = tf.tensor(features)
-    features = tf.ones([features.shape[0], 1]).concat(features, 1)
-
-    return features
 
     // If mean + variance aren't defined, need to do the first time standardisation (i.e, before/during training)
     // Otherwise, we're standardising test data, and need to re-apply the training standardisation (from the training mean+variance), and NOT use the test features.
@@ -97,6 +94,8 @@ class LinearRegression {
     } else {
       features = this.standardize(features)
     }
+
+    features = tf.ones([features.shape[0], 1]).concat(features, 1)
 
     return features
   }
@@ -107,7 +106,7 @@ class LinearRegression {
     this.mean = mean
     this.variance = variance
 
-    return features.sub(this.mean).div(this.variance.pow(0.5))
+    return features.sub(mean).div(variance.pow(0.5))
   }
 }
 
