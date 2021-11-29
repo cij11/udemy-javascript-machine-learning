@@ -1,5 +1,6 @@
 require('@tensorflow/tfjs-node')
 const LinearRegression = require('./linear-regression')
+const plot = require('node-remote-plot')
 
 const tf = require('@tensorflow/tfjs')
 
@@ -19,10 +20,11 @@ const regression = new LinearRegression(features, labels, {
 
 regression.train()
 
-console.log('Weights shape')
-console.log(regression.weights.shape)
-
-console.log('Updated M is: ', regression.weights.arraySync()[1][0], 'Updated B is: ', regression.weights.arraySync()[0][0])
+plot({
+  x: regression.mseHistory.reverse(),
+  xLabel: 'Iteration #',
+  yLabel: 'Mean Squared Error'
+})
 
 const r2 = regression.test(testFeatures, testLabels)
 

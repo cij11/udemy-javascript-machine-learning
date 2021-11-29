@@ -5,6 +5,7 @@ class LinearRegression {
   constructor(features, labels, options) { // assume features and labels are already tensorflow tensors
     this.features = this.processFeatures(features)
     this.labels = tf.tensor(labels);
+    this.mseHistory = []
 
     this.options = Object.assign({
       learningRate: 0.1, iterations: 1000
@@ -53,6 +54,8 @@ class LinearRegression {
   train() {
     for (let i = 0; i < this.options.iterations; i++) {
       this.gradientDescent()
+      this.recordMeanSquaredError() // If mean squared error is going up, learning rate too high. If mean squared error going down, learning rate could be reduced
+      this.updateLearningRate()
     }
   }
 
@@ -107,6 +110,29 @@ class LinearRegression {
     this.variance = variance
 
     return features.sub(mean).div(variance.pow(0.5))
+  }
+
+  recordMeanSquaredError() {
+    const mse = this.features.matMul(this.weights)
+      .sub(this.labels)
+      .pow(2)
+      .sum()
+      .div(this.features.shape[0])
+      .arraySync()
+
+    this.mseHistory.unshift(mse)
+  }
+
+  updateLearningRate() {
+    if (this.mseHistory.length < 2) {
+      return;
+    }
+
+    if (this.mseHistory[0] > this.mseHistory[1]) {
+      this.options.learningRate /= 2
+    } else {
+      this.options.learningRate *= 1.05
+    }
   }
 }
 
