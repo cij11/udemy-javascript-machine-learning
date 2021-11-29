@@ -10,7 +10,7 @@ class LinearRegression {
       learningRate: 0.1, iterations: 1000
     }, options)
 
-    this.weights = tf.zeros([2, 1])
+    this.weights = tf.zeros([this.features.shape[1], 1])
     // 2 by 1 matrix
     // With the way we're calculating gradient descent:
     // 0, 0 = b
