@@ -3,12 +3,8 @@ const _ = require('lodash')
 
 class LinearRegression {
   constructor(features, labels, options) { // assume features and labels are already tensorflow tensors
-    this.features = tf.tensor(features);
+    this.features = this.processFeatures(features)
     this.labels = tf.tensor(labels);
-
-    // Prepend column of 1's to the features tensor, so that the later matrix multiplication works out
-    this.features = tf.ones([this.features.shape[0], 1])
-      .concat(this.features, 1)
 
     this.options = Object.assign({
       learningRate: 0.1, iterations: 1000
@@ -61,12 +57,8 @@ class LinearRegression {
   }
 
   test(testFeatures, testLabels) {
-    testFeatures = tf.tensor(testFeatures)
+    testFeatures = this.processFeatures(testFeatures)
     testLabels = tf.tensor(testLabels)
-
-     // Prepend column of 1's, so that shapes support multiplication
-     testFeatures = tf.ones([testFeatures.shape[0], 1])
-     .concat(testFeatures, 1)
 
      // Multiplying features by weights essentially does y = mx + b for entire dataset
      // Note: Features must be on the left, for dimensions/shapes to match
@@ -91,6 +83,32 @@ class LinearRegression {
       return 1 - ssRes / ssTot
   }
 
+  // Scale and prepend 1's. This needs to be applied to training and test features
+  processFeatures(features) {
+    features = tf.tensor(features)
+    features = tf.ones([features.shape[0], 1]).concat(features, 1)
+
+    return features
+
+    // If mean + variance aren't defined, need to do the first time standardisation (i.e, before/during training)
+    // Otherwise, we're standardising test data, and need to re-apply the training standardisation (from the training mean+variance), and NOT use the test features.
+    if (this.mean && this.variance) {
+      features = features.sub(this.mean).div(this.variance.pow(0.5))
+    } else {
+      features = this.standardize(features)
+    }
+
+    return features
+  }
+
+  standardize(features) {
+    const { mean, variance } = tf.moments(features, 0)
+
+    this.mean = mean
+    this.variance = variance
+
+    return features.sub(this.mean).div(this.variance.pow(0.5))
+  }
 }
 
 module.exports = LinearRegression
