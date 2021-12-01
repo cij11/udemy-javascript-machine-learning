@@ -5,7 +5,7 @@ class LogisticRegression {
   constructor(features, labels, options) { // assume features and labels are already tensorflow tensors
     this.features = this.processFeatures(features)
     this.labels = tf.tensor(labels);
-    this.mseHistory = []
+    this.costHistory = [] // Cost (Here calculated from cross entropy) history.
 
     this.options = Object.assign({
       learningRate: 0.1, iterations: 1000, batchSize: 10, decisionBoundary: 0.5
@@ -45,7 +45,7 @@ class LogisticRegression {
         this.gradientDescent(featureSlice, labelSlice) // Slice: (startcoords eg, current row: i * batchSize, first column: 0), (size-of-slice eg (batchSize (rows), -1 (all columns))))
       }
 
-      this.recordMeanSquaredError() // If mean squared error is going up, learning rate too high. If mean squared error going down, learning rate could be reduced
+      this.recordCost() // If cost is going up, learning rate needs to be reduced
       this.updateLearningRate()
     }
   }
@@ -96,23 +96,40 @@ class LogisticRegression {
     return features.sub(mean).div(variance.pow(0.5))
   }
 
-  recordMeanSquaredError() {
-    const mse = this.features.matMul(this.weights)
-      .sub(this.labels)
-      .pow(2)
-      .sum()
-      .div(this.features.shape[0])
-      .arraySync()
+  recordCost() {
+    // Cross Entropy = 
+    // -(1/n) * (ActualTransposed * log(Guesses)) + (1 - Actual)Transposed * Log(1-Guesses)
+    const guesses = this.features.matMul(this.weights)
+    .sigmoid()
 
-    this.mseHistory.unshift(mse)
+    const termOne = this.labels
+      .transpose()
+      .matMul(guesses.log())
+
+    const termTwo = this.labels
+      .mul(-1) // -Actual
+      .add(1) // 1 - Actual
+      .transpose()
+      .matMul(
+        guesses.mul(-1) // - guesses
+        .add(1)
+        .log() // log (1 - guesses)
+      )
+
+    const cost = termOne.add(termTwo)
+        .div(this.features.shape[0])
+        .mul(-1) // * -1/n
+        .arraySync()[0,0]
+
+    this.costHistory.unshift(cost)
   }
 
   updateLearningRate() {
-    if (this.mseHistory.length < 2) {
+    if (this.costHistory.length < 2) {
       return;
     }
 
-    if (this.mseHistory[0] > this.mseHistory[1]) {
+    if (this.costHistory[0] > this.costHistory[1]) {
       this.options.learningRate /= 2
     } else {
       this.options.learningRate *= 1.05
