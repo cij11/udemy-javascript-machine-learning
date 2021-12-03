@@ -11,11 +11,11 @@ class LogisticRegression {
       learningRate: 0.1, iterations: 1000, batchSize: 10, decisionBoundary: 0.5
     }, options)
 
-    this.weights = tf.zeros([this.features.shape[1], 1])
+    this.weights = tf.zeros([this.features.shape[1], this.labels.shape[1]])
   }
 
   gradientDescent(features, labels) {
-    const currentGuesses = features.matMul(this.weights).sigmoid()
+    const currentGuesses = features.matMul(this.weights).softmax()
     const differences = currentGuesses.sub(labels)
 
 
@@ -53,8 +53,8 @@ class LogisticRegression {
   predict(observations) {
     return observations = this.processFeatures(observations)
       .matMul(this.weights)
-      .sigmoid()
-      .greater(this.options.decisionBoundary)
+      .softmax()
+      .argMax(1)
   }
 
   test(testFeatures, testLabels) {
@@ -63,11 +63,10 @@ class LogisticRegression {
     // Subtract + abs (so that 0 == correct and 1 = incorrect)
     // Sum and take incorrect / total
      const predictions = this.predict(testFeatures)
-     testLabels = tf.tensor(testLabels)
+     testLabels = tf.tensor(testLabels).argMax(1) // Store the index of the column with the highest value for that row
 
-     const incorrect = predictions.sub(testLabels)
-     .abs()
-     .sum()
+     const incorrect = predictions.notEqual(testLabels) // If pred != actual, this will be 1
+     .sum() // = number of incorrect guesses
      .arraySync()
 
      return (predictions.shape[0] - incorrect) / predictions.shape[0]
@@ -100,7 +99,7 @@ class LogisticRegression {
     // Cross Entropy = 
     // -(1/n) * (ActualTransposed * log(Guesses)) + (1 - Actual)Transposed * Log(1-Guesses)
     const guesses = this.features.matMul(this.weights)
-    .sigmoid()
+    .softmax()
 
     const termOne = this.labels
       .transpose()

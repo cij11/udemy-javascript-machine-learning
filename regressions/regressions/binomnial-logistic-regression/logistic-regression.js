@@ -11,7 +11,7 @@ class LogisticRegression {
       learningRate: 0.1, iterations: 1000, batchSize: 10, decisionBoundary: 0.5
     }, options)
 
-    this.weights = tf.zeros([this.features.shape[1], 1])
+    this.weights = tf.zeros([this.features.shape[1], this.labels.shape[1]])
   }
 
   gradientDescent(features, labels) {
