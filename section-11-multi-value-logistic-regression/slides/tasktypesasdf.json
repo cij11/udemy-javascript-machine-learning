@@ -1,0 +1,288 @@
+{
+  "data": [
+    {
+      "id": 117,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Deep Clean",
+        "amount_type": "TIME",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_DEEP_CLEAN",
+        "service_type": 5506,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 125,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Health & Safety Audit",
+        "amount_type": "NONE",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_HEALTH_SAFETY_AUDIT",
+        "service_type": 5517,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": false,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 1
+      }
+    },
+    {
+      "id": 122,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Laundry Owner Linen (Guest & Owner)",
+        "amount_type": "TIME",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_LAUNDRY_OWNER_LINEN_GUEST_OWNER",
+        "service_type": 5511,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 1,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 119,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Linen Bed Making & Stripping (Owner)",
+        "amount_type": "UNIT",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_LINEN_BED_MAKING_STRIPPING_OWNER",
+        "service_type": 5508,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 118,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Linen Ordering & Storage (Owner)",
+        "amount_type": "NONE",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_LINEN_ORDERING_STORAGE_OWNER",
+        "service_type": 5507,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": false,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 121,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Linen - Secondary \/ Subsequent drop to Owner",
+        "amount_type": "NONE",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_LINEN_SECONDARY_SUBSEQUENT_DROP_TO_OWNER",
+        "service_type": 5510,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": false,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 126,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "New Owner Lead Payment",
+        "amount_type": "NONE",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_NEW_OWNER_LEAD_PAYMENT",
+        "service_type": 5518,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": false,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 0,
+        "is_assignable_to_supplier": 1
+      }
+    },
+    {
+      "id": 116,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Owner Clean incl. Rubbish Removal",
+        "amount_type": "TIME",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_OWNER_CLEAN_INCL_RUBBISH_REMOVAL",
+        "service_type": 5505,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 123,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Property Maintenance - Owner",
+        "amount_type": "TIME",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_PROPERTY_MAINTENANCE_OWNER",
+        "service_type": 5512,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": true,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 115,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Purchase - Consumables",
+        "amount_type": "COST",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_PURCHASE_CONSUMABLES",
+        "service_type": 5504,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": true,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 0,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 0
+      }
+    },
+    {
+      "id": 127,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Travel Charge",
+        "amount_type": "NONE",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_TRAVEL_CHARGE",
+        "service_type": 5519,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": false,
+        "is_assignable_to_booking": 1,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 1
+      }
+    },
+    {
+      "id": 129,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Bachcare Purchases",
+        "amount_type": "COST",
+        "created_at": "2021-10-21 03:11:18",
+        "modified_at": "2021-10-21 03:11:18",
+        "status": "ACTIVE",
+        "key": "BACHCARE_PURCHASES",
+        "service_type": 5601,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": true,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 1,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 1
+      }
+    },
+    {
+      "id": 130,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Bachcare Cleaning",
+        "amount_type": "TIME",
+        "created_at": "2021-10-21 03:11:18",
+        "modified_at": "2021-10-21 03:11:18",
+        "status": "ACTIVE",
+        "key": "BACHCARE_CLEANING",
+        "service_type": 5602,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 1,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 1
+      }
+    },
+    {
+      "id": 114,
+      "type": "TASK_TYPE",
+      "attributes": {
+        "company_id": 4,
+        "name": "Callout Bachcare",
+        "amount_type": "TIME",
+        "created_at": "2021-09-30 02:30:28",
+        "modified_at": "2021-09-30 02:30:28",
+        "status": "ACTIVE",
+        "key": "BACHCARE_CALLOUT_BACHCARE",
+        "service_type": 5403,
+        "is_description_required_at_creation": true,
+        "is_narration_required_at_completion": false,
+        "is_amount_editable": true,
+        "is_assignable_to_booking": 1,
+        "is_assignable_to_property": 1,
+        "is_assignable_to_supplier": 1
+      }
+    }
+  ],
+  "status": {
+    "code": 200,
+    "message": ""
+  }
+}
