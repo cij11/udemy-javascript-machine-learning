@@ -89,10 +89,16 @@ class LogisticRegression {
   standardize(features) {
     const { mean, variance } = tf.moments(features, 0)
 
+    const filler =  variance.cast('bool') // Cast to bool, invert, cast back to float, then sum.
+    .logicalNot()
+    .cast('float32') 
+  
     this.mean = mean
-    this.variance = variance
+    this.variance = variance.add(filler) // Add filler. The effect of this is just to turn 0's to 1's. This prevents divide by 0's filling the tensor with NaN
 
-    return features.sub(mean).div(variance.pow(0.5))
+    debugger
+
+    return features.sub(this.mean).div(this.variance.pow(0.5))
   }
 
   recordCost() {
