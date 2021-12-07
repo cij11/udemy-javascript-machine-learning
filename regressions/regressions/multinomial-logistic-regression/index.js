@@ -5,14 +5,9 @@ const _ = require('lodash')
 const mnist = require('mnist-data')
 
 
-const mnistData = mnist.training(0, 60000)
+const { features, labels } = loadData()
 
-const features = mnistData.images.values.map(image => _.flatMap(image))
-
-const encodedLabels = mnistData.labels.values.map(mapLabels)
-
-
-const regression = new LogisticRegression(features, encodedLabels, {
+const regression = new LogisticRegression(features, labels, {
   learningRate: 1,
   iterations: 20,
   batchSize: 100
@@ -27,6 +22,15 @@ const testEncodedLabels = testMnistData.labels.values.map(mapLabels)
 const accuracy = regression.test(testFeatures, testEncodedLabels)
 
 console.log('accuracy: ', accuracy)
+
+function loadData() {
+  const mnistData = mnist.training(0, 60000)
+
+  const features = mnistData.images.values.map(image => _.flatMap(image))
+  const encodedLabels = mnistData.labels.values.map(mapLabels)
+
+  return { features, labels: encodedLabels}
+}
 
 function mapLabels(label) {
   const row = new Array(10).fill(0);

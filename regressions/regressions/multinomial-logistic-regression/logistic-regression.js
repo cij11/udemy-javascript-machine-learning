@@ -24,7 +24,7 @@ class LogisticRegression {
     .matMul(differences)
     .div(features.shape[0]) // divide by n
 
-    this.weights = this.weights.sub(slopes.mul(this.options.learningRate)) // Subtract gradients * learning rates from previous weights
+    return this.weights.sub(slopes.mul(this.options.learningRate)) // Subtract gradients * learning rates from previous weights
   }
 
   train() {
@@ -33,16 +33,19 @@ class LogisticRegression {
     for (let i = 0; i < this.options.iterations; i++) {
       for(let j = 0; j < batchQuantity; j++) {
         const startIndex = j * batchSize;
-        const featureSlice = this.features.slice(
-          [startIndex, 0], 
-          [batchSize, -1]
-        )
-        const labelSlice = this.labels.slice([
-          startIndex, 0], 
-          [batchSize, -1]
-        )
 
-        this.gradientDescent(featureSlice, labelSlice) // Slice: (startcoords eg, current row: i * batchSize, first column: 0), (size-of-slice eg (batchSize (rows), -1 (all columns))))
+        this.weights = tf.tidy(() => { // Wrap in tf.tidy to clean up all tensors, except those that are returned function
+          const featureSlice = this.features.slice(
+            [startIndex, 0], 
+            [batchSize, -1]
+          )
+          const labelSlice = this.labels.slice([
+            startIndex, 0], 
+            [batchSize, -1]
+          )
+  
+          return this.gradientDescent(featureSlice, labelSlice) // Slice: (startcoords eg, current row: i * batchSize, first column: 0), (size-of-slice eg (batchSize (rows), -1 (all columns))))
+        })
       }
 
       this.recordCost() // If cost is going up, learning rate needs to be reduced
