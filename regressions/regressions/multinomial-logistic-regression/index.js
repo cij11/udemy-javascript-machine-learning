@@ -9,7 +9,7 @@ const { features, labels } = loadData()
 
 const regression = new LogisticRegression(features, labels, {
   learningRate: 1,
-  iterations: 20,
+  iterations: 80,
   batchSize: 100
 })
 

@@ -105,6 +105,7 @@ class LogisticRegression {
   }
 
   recordCost() {
+    const cost = tf.tidy(() => {
     // Cross Entropy = 
     // -(1/n) * (ActualTransposed * log(Guesses)) + (1 - Actual)Transposed * Log(1-Guesses)
     const guesses = this.features.matMul(this.weights)
@@ -112,7 +113,7 @@ class LogisticRegression {
 
     const termOne = this.labels
       .transpose()
-      .matMul(guesses.log())
+      .matMul(guesses.add(1e-7).log())
 
     const termTwo = this.labels
       .mul(-1) // -Actual
@@ -121,13 +122,16 @@ class LogisticRegression {
       .matMul(
         guesses.mul(-1) // - guesses
         .add(1)
+        .add(1e-7) // Make sure we never take log(0)
         .log() // log (1 - guesses)
       )
 
-    const cost = termOne.add(termTwo)
+    return termOne.add(termTwo)
         .div(this.features.shape[0])
         .mul(-1) // * -1/n
         .arraySync()[0,0]
+    })
+
 
     this.costHistory.unshift(cost)
   }
